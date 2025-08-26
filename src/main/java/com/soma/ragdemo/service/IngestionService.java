@@ -12,8 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-@Component
-public class IngestionService implements CommandLineRunner {
+//@Component
+public class IngestionService {//implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(IngestionService.class);
     private final VectorStore vectorStore;
@@ -25,7 +25,7 @@ public class IngestionService implements CommandLineRunner {
         this.vectorStore = vectorStore;
     }
 
-    @Override
+   // @Override
     public void run(String... args) throws Exception {
         var pdfReader = new PagePdfDocumentReader(marketPDF);
         TextSplitter textSplitter = new TokenTextSplitter();

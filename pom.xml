@@ -8,10 +8,10 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dev.danvega</groupId>
-	<artifactId>markets</artifactId>
+	<groupId>com.soma</groupId>
+	<artifactId>growthmate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>markets</name>
+	<name>repoanalyzer</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -84,6 +84,11 @@
 			<artifactId>spring-ai-huggingface-spring-boot-starter</artifactId>
 		</dependency>-->
 
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>6.8.0.202311291450-r</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
