@@ -42,12 +42,20 @@ public class GitIngestionService {
                 .setURI(repoUrl)
                 .setDirectory(tempDir.toFile())
                 .call()) {
-            // Read all files (customize file types as needed)
+            // Only process text files
             List<File> files = listFilesRecursively(tempDir.toFile());
             for (File file : files) {
-                String content = Files.readString(file.toPath());
-                // Load to vector store (replace with your actual implementation)
-                loadToVectorStore(file.getName(), content);
+                String name = file.getName().toLowerCase();
+                if (name.endsWith(".md") || name.endsWith(".txt") || name.endsWith(".java") || name.endsWith(".py") || name.endsWith(".csv") || name.endsWith(".json") || name.endsWith(".xml") || name.endsWith(".html") || name.endsWith(".js") || name.endsWith(".ts") || name.endsWith(".pdf")) {
+                    try {
+                        String content = Files.readString(file.toPath());
+                        loadToVectorStore(file.getName(), content);
+                    } catch (IOException e) {
+                        log.warn("Skipping file due to read error: {}", file.getAbsolutePath());
+                    }
+                } else {
+                    log.debug("Skipping non-text file: {}", file.getAbsolutePath());
+                }
             }
         } finally {
             // Optionally delete tempDir after processing
