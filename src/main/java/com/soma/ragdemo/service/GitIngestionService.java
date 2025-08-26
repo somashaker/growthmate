@@ -107,4 +107,26 @@ public class GitIngestionService {
                 });
         }
     }
+
+    public void ingestMultipleRepos(List<String> repoUrls) {
+        int threads = Math.min(16, repoUrls.size());
+        java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(threads);
+        for (String url : repoUrls) {
+            executor.submit(() -> {
+                try {
+                    ingestFromGitRepo(url);
+                } catch (Exception e) {
+                    log.error("Failed to ingest repo: {}", url, e);
+                }
+            });
+        }
+        executor.shutdown();
+        //put below logic tin while if you need to wait till all tasks are completed
+        //while (!executor.isTerminated()) {
+        try {
+            executor.awaitTermination(1, java.util.concurrent.TimeUnit.HOURS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }
